@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Form } from "./components/Form";
 import { List } from "./components/List";
 import { Error } from "./components/Error";
 import "./styles.css";
@@ -7,11 +8,17 @@ const App = () => {
   const [persons, setPersons] = useState([
     { name: "Hoose", number: "3141066664" }
   ]);
-  const [newName, setNewName] = useState("");
-  const [newNumber, setNewNumber] = useState("");
+
   const [error, setError] = useState({ state: false, input: "" });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (
+    e,
+    newName,
+    newNumber,
+    validateNumber,
+    setNewName,
+    setNewNumber
+  ) => {
     e.preventDefault();
     if (newName === "") {
       setError({ state: true, type: "Nombre" });
@@ -34,49 +41,10 @@ const App = () => {
     setNewNumber("");
   };
 
-  const handleChangeName = (e) => {
-    setError({ state: false, input: "" });
-    setNewName(e.target.value);
-  };
-
-  const handleChangeNumber = (e) => {
-    if (!Number(e.target.value) && e.target.value !== "") {
-      return;
-    }
-    setError({ state: false, input: "" });
-    setNewNumber(e.target.value);
-  };
-
-  const validateNumber = () => {
-    const coincidences = persons.filter((person) => person.number === newNumber)
-      .length;
-    return coincidences;
-  };
-
   return (
     <>
       <h2>Guía telefónica</h2>
-      <form onSubmit={handleSubmit} className="form-section">
-        <div className="name-input-section">
-          Nombre:{" "}
-          <input
-            value={newName}
-            maxLength={20}
-            onChange={(e) => handleChangeName(e)}
-          />
-        </div>
-        <div className="number-input-section">
-          Numero:{" "}
-          <input
-            value={newNumber}
-            maxLength={10}
-            onChange={(e) => handleChangeNumber(e)}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Form handleSubmit={handleSubmit} persons={persons} setError={setError} />
       {error.state ? <Error error={error.type} /> : true}
       <div className="separator"></div>
       <h2>Numbers</h2>
