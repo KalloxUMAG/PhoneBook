@@ -14,11 +14,11 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newName === "") {
-      setError({ state: true, input: "Nombre" });
+      setError({ state: true, type: "Nombre" });
       return;
     }
     if (newNumber === "") {
-      setError({ state: true, input: "Numero" });
+      setError({ state: true, type: "Numero" });
       return;
     }
     const newPerson = {
@@ -26,6 +26,7 @@ const App = () => {
       number: newNumber
     };
     if (validateNumber()) {
+      setError({ state: true, type: "Repeat" });
       return;
     }
     setPersons([...persons, newPerson]);
@@ -58,7 +59,11 @@ const App = () => {
       <form onSubmit={handleSubmit} className="form-section">
         <div className="name-input-section">
           Nombre:{" "}
-          <input value={newName} onChange={(e) => handleChangeName(e)} />
+          <input
+            value={newName}
+            maxLength={20}
+            onChange={(e) => handleChangeName(e)}
+          />
         </div>
         <div className="number-input-section">
           Numero:{" "}
@@ -72,7 +77,7 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
-      {error.state ? <Error error={error.input} /> : true}
+      {error.state ? <Error error={error.type} /> : true}
       <div className="separator"></div>
       <h2>Numbers</h2>
       <List persons={persons} />

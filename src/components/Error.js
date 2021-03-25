@@ -4,7 +4,9 @@ import "./error.css";
 export const Error = ({ error }) => {
   return (
     <div className="error-section">
-      Te falta rellenar el campo <span>{error}</span>
+      {error === "Nombre" || error === "Numero"
+        ? `Te falta rellenar el campo ${error}`
+        : "El numero ingresado ya existe"}
     </div>
   );
 };
