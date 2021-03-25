@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { List } from "./components/List";
+import { Error } from "./components/Error";
+import "./styles.css";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -6,9 +9,18 @@ const App = () => {
   ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [error, setError] = useState({ state: false, input: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (newName === "") {
+      setError({ state: true, input: "Nombre" });
+      return;
+    }
+    if (newNumber === "") {
+      setError({ state: true, input: "Numero" });
+      return;
+    }
     const newPerson = {
       name: newName,
       number: newNumber
@@ -22,13 +34,15 @@ const App = () => {
   };
 
   const handleChangeName = (e) => {
+    setError({ state: false, input: "" });
     setNewName(e.target.value);
   };
 
   const handleChangeNumber = (e) => {
-    if (!Number(e.target.value)) {
+    if (!Number(e.target.value) && e.target.value !== "") {
       return;
     }
+    setError({ state: false, input: "" });
     setNewNumber(e.target.value);
   };
 
@@ -41,21 +55,16 @@ const App = () => {
   return (
     <>
       <h2>Guía telefónica</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="form-section">
+        <div className="name-input-section">
           Nombre:{" "}
-          <input
-            value={newName}
-            required={true}
-            onChange={(e) => handleChangeName(e)}
-          />
+          <input value={newName} onChange={(e) => handleChangeName(e)} />
         </div>
-        <div>
+        <div className="number-input-section">
           Numero:{" "}
           <input
             value={newNumber}
             maxLength={10}
-            required={true}
             onChange={(e) => handleChangeNumber(e)}
           />
         </div>
@@ -63,16 +72,10 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
+      {error.state ? <Error error={error.input} /> : true}
+      <div className="separator"></div>
       <h2>Numbers</h2>
-      <ul>
-        {persons.map((person) => {
-          return (
-            <li key={person.number}>
-              {person.name}: {person.number}
-            </li>
-          );
-        })}
-      </ul>
+      <List persons={persons} />
     </>
   );
 };

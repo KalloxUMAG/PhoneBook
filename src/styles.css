@@ -1,4 +1,39 @@
 .App {
   font-family: sans-serif;
-  text-align: center;
+}
+
+body {
+  background-color: antiquewhite;
+}
+
+.name-input-section {
+  margin: 5px;
+}
+
+.number-input-section {
+  margin: 5px;
+}
+
+.form-section {
+  margin-left: 10px;
+
+  font-family: "Times New Roman", Times, serif;
+}
+
+.separator {
+  width: 100%;
+  border-width: 2px;
+  border-style: solid;
+  border-bottom-color: black;
+}
+
+li {
+  font-size: 20px;
+}
+
+button {
+  margin: 0.5em;
+  border-radius: 12px;
+  width: 30%;
+  font-size: 20px;
 }

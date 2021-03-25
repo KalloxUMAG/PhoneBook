@@ -1,0 +1,22 @@
+.error-section {
+  background-color: red;
+  font-size: 24px;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  margin-bottom: 3px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  animation-duration: 2s;
+  animation-name: appear;
+}
+
+@keyframes appear {
+  from {
+    font-size: 3px;
+  }
+  to {
+    font-size: 24px;
+  }
+}
